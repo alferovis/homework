@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(){
-	cout << "Today is October 11, 2022" << endl;
+	cout << "Tomorrow will be October 12, 2022" << endl;
 	return 0;
 }
 
