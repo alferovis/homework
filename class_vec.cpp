@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <typeinfo>
 using namespace std;
 
 class vector{
@@ -11,6 +12,7 @@ public:
 	vector(int size, string id);
 	void print();
 	void set_id(string id);
+	void set_data(int size, double* data);
 };
 
 vector :: vector(int size, string id = "unknown") {
@@ -35,6 +37,14 @@ void vector :: set_id(string id){
 	this->id = id;
 };
 
+void vector :: set_data(int size, double* data) {
+	this->size = size;
+	this->data = new double[size];
+	for (int i; i < size; i++) {
+		this->data[i] = data[i];
+	}
+};
+
 
 class matrix{
 	int size;
@@ -43,6 +53,7 @@ class matrix{
 public:
 	matrix(int size, string id);
 	void print();
+	void set_data(int size, double** data2d);
 };
 
 matrix :: matrix(int size, string id = "unknown"){
@@ -50,7 +61,7 @@ matrix :: matrix(int size, string id = "unknown"){
 	this->id = id;
 
 	data2d = new double* [size];
-	for (int i = 0; i <size; i++) {
+	for (int i = 0; i < size; i++) {
 		data2d[i] = new double [size];
 	}
 	for (int i = 0; i < size; i++) {
@@ -71,6 +82,22 @@ void matrix :: print() {
 	cout << endl;
 };
 
+void matrix :: set_data(int size, double** data2d) {
+	this->size = size;
+	this->data2d = new double*[size];
+
+	for (int i = 0; i < size; i++){
+		this->data2d[i] = new double[size];
+		for (int j = 0; j < size; j++) {
+			this->data2d[i][j] = data2d[i][j];
+		}
+	}
+};
+
+/*vector multiply(matrix m, vector v) {
+	vector w(5);
+	return w;
+}*/
 
 
 int main(){
@@ -81,9 +108,20 @@ int main(){
 	v1.print();
 	v2.print();
 
+	vector v3(5);
+	double arr[6] = {10, 11, 12, 13, 14, 15};
+	v3.set_data(6, arr);
+	v3.print();
+	//cout << typeid(v3).name() << " " << typeid(arr).name() << endl;
+
 	//cout << v1.size;
 
 	matrix m(2, "first matrix");
+	m.print();
+	double** arr2d = new double*[2];
+	arr2d[0] = new double[2]{111, 112};
+	arr2d[1] = new double[2]{113, 114};
+	m.set_data(2, arr2d);
 	m.print();
 
 	return 0;
