@@ -3,6 +3,8 @@
 #include <typeinfo>
 using namespace std;
 
+class matrix;
+
 class vector{
 private:
 	int size;
@@ -13,7 +15,24 @@ public:
 	void print();
 	void set_id(string id);
 	void set_data(int size, double* data);
+	friend class matrix;
+	friend vector multiply(matrix m, vector v);
+	friend vector operator+(vector v, vector u);
 };
+
+class matrix{
+private:
+        int size;
+        string id;
+        double** data2d;
+public:
+        matrix(int size, string id);
+        void print();
+        void set_data(int size, double** data2d);
+        friend class vector;
+        friend vector multiply(matrix m, vector v);
+};
+
 
 vector :: vector(int size, string id = "unknown") {
 	this->size = size;
@@ -25,7 +44,7 @@ vector :: vector(int size, string id = "unknown") {
 	}
 };
 
-void vector :: print(){
+void vector :: print() {
 	cout << id << " " << size << endl;
 	for (int i = 0; i < size; i++) {
 		cout << data[i] << " ";
@@ -33,7 +52,7 @@ void vector :: print(){
 	cout << endl << endl;
 };
 
-void vector :: set_id(string id){
+void vector :: set_id(string id) {
 	this->id = id;
 };
 
@@ -45,18 +64,26 @@ void vector :: set_data(int size, double* data) {
 	}
 };
 
-
-class matrix{
-	int size;
-	string id;
-	double** data2d;
-public:
-	matrix(int size, string id);
-	void print();
-	void set_data(int size, double** data2d);
+vector multiply(matrix m, vector v) {
+	vector res(m.size);
+	for (int i = 0; i < m.size; i++) {
+		res.data[i] = 0;
+		for (int j = 0; j < v.size; j++) {
+			res.data[i] += m.data2d[i][j] * v.data[j];
+		}
+	}
+	return res;
 };
 
-matrix :: matrix(int size, string id = "unknown"){
+vector operator+(vector v, vector u){
+	vector w(v.size);
+	for (int i = 0; i < v.size; i++){
+		w.data[i] = v.data[i] + u.data[i];
+	}
+	return w;
+};
+
+matrix :: matrix(int size, string id = "unknown") {
 	this->size = size;
 	this->id = id;
 
@@ -94,23 +121,18 @@ void matrix :: set_data(int size, double** data2d) {
 	}
 };
 
-/*vector multiply(matrix m, vector v) {
-	vector w(5);
-	return w;
-}*/
-
 
 int main(){
 	cout << "Hello, world" << endl;
 	
 	vector v1(5, "first vector");
-	vector v2(7);
+	vector v2(2);
 	v1.print();
 	v2.print();
 
 	vector v3(5);
-	double arr[6] = {10, 11, 12, 13, 14, 15};
-	v3.set_data(6, arr);
+	double arr[5] = {11, 12, 13, 14, 15};
+	v3.set_data(5, arr);
 	v3.print();
 	//cout << typeid(v3).name() << " " << typeid(arr).name() << endl;
 
@@ -123,6 +145,14 @@ int main(){
 	arr2d[1] = new double[2]{113, 114};
 	m.set_data(2, arr2d);
 	m.print();
+	
+	cout << "testing multiplication" << endl;
+	vector v4 = multiply(m, v2);
+	v4.print();
+
+	cout << "testing operator +" << endl;
+	vector v5 = v1 + v3;
+	v5.print();
 
 	return 0;
 }
