@@ -16,7 +16,7 @@ vector multiply(matrix m, vector v) {
 	return res;
 };
 
-vector operator+(vector v, vector u){
+vector operator+(vector v, vector u) {
 	vector w(v.size, "plus");
 	for (int i = 0; i < v.size; i++){
 		w.data[i] = v.data[i] + u.data[i];
@@ -24,6 +24,35 @@ vector operator+(vector v, vector u){
 	return w;
 };
 
+vector operator*(double a, vector v){
+	vector w(v.size, "mult");
+	for (int i = 0; i < v.size; i++){
+		w.data[i] = a * v.data[i];
+        }
+        return w;
+};
+
+vector operator-(vector v, vector u) {
+	vector w(v.size, "minus");
+	for (int i = 0; i < v.size; i++){
+		w.data[i] = v.data[i] - u.data[i];
+	}
+	return w;
+};
+
+
+vector simple_iter(matrix A, vector b, double eps){
+	vector x_prev(A.size);
+	x_prev.set_data(b.size, b.data);
+	vector x(A.size);
+	
+	double tau = 2 / A.norm_frob();
+	double error = x_prev.norm2();
+        while (error > eps){
+		x = x_prev - tau * multiply(A, x_prev) + tau*b;		
+	}
+	return x;
+};
 
 
 int main(){

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "matrix.h"
+#include <cmath>
 
 using namespace std;
 
@@ -41,3 +42,14 @@ void matrix :: set_data(int size, double** data2d) {
 		}
 	}
 };
+
+double matrix :: norm_frob() {
+	double n = 0;
+	for (int i = 0 ; i < this->size; i++){
+		for (int j = 0; j < this->size; j++){
+			n += this->data2d[i][j] * this->data2d[i][j];
+		}
+	}
+	return sqrt(n);
+};
+

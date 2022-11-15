@@ -15,6 +15,10 @@
 		friend class matrix;
 		friend vector multiply(matrix m, vector v);
 		friend vector operator+(vector v, vector u);
+		friend vector operator-(vector v, vector u);
+		friend vector operator*(double a, vector v);
+		double norm2();
+		friend vector simple_iter(matrix A, vector b, double eps);
 	};
 #endif
 

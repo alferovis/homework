@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "vector.h"
 
 using namespace std;
@@ -33,3 +34,12 @@ void vector :: set_data(int size, double* data) {
 		this->data[i] = data[i];
 	}
 };
+
+double vector :: norm2() {
+	double n = 0;
+	for (int i = 0 ; i < this->size; i++){
+		n += this->data[i] * this->data[i];
+	}
+	return sqrt(n);
+};
+

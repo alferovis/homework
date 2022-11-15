@@ -13,5 +13,8 @@ public:
         void set_data(int size, double** data2d);
         friend class vector;
         friend vector multiply(matrix m, vector v);
+        double norm_frob();
+        friend vector simple_iter(matrix A, vector b, double eps);
+
 };
 #endif
