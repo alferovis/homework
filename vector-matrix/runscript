@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for file in `ls`; do
+	if [[ $file =~ .*\.o ]]; then
+		rm $file
+	fi
+done
+
+g++ -c vector.cpp
+g++ -c vector.cpp matrix.cpp
+g++ -c main.cpp
+g++ -o main vector.o matrix.o main.o
+./main
