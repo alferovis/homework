@@ -1,0 +1,47 @@
+#!/bin/bash
+
+echo "hello, world"
+
+a="abc"
+let b=123
+if [ $a == "abc" ] && [ $b -eq 123 ]; then 
+	ls ${a}115b
+else 
+	echo -
+fi
+
+while [ $a == "abc" ]; do
+	break
+	echo
+done
+
+for i  in {1 ... 1 }; do
+	echo $i
+done
+
+files=`ls`
+for fn in $files; do
+	echo $fn
+done
+
+for ((c=1; c<10; c++)); do
+	echo $c
+done
+
+echo `ls | grep -q blablablbalba`
+if [ $? -eq 0 ]; then 
+	echo +
+fi
+
+((a=1)); ((a=a+3)); echo $a
+
+a=1
+b=2
+res=$(bc<<EOF
+c=($a+$b)
+d=($a*$b)
+c*d+1
+EOF
+)
+echo $res
+
