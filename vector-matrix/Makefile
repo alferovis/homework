@@ -4,7 +4,7 @@ OBJs=$(SRC:.cpp=.o)
 OBJ_DIR=./obj
 OBJ=$(patsubst %.o,${OBJ_DIR}/%.o,${OBJs})
 LIB_DIR=./lib
-LIB=./lib/libmy.a
+LIB=./lib/libmy2.a
 FLAGS=-c
 OPT=-O3
 comp=g++

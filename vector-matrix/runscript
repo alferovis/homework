@@ -6,7 +6,6 @@ for file in `ls`; do
 	fi
 done
 
-g++ -c vector.cpp
 g++ -c vector.cpp matrix.cpp
 g++ -c main.cpp
 g++ -o main vector.o matrix.o main.o

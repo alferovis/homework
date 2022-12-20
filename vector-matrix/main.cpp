@@ -45,12 +45,19 @@ vector simple_iter(matrix A, vector b, double eps){
 	vector x_prev(A.size);
 	x_prev.set_data(b.size, b.data);
 	vector x(A.size);
+	vector y(A.size);
 	
+	int count = 0;
 	double tau = 2 / A.norm_frob();
 	double error = x_prev.norm2();
         while (error > eps){
 		x = x_prev - tau * multiply(A, x_prev) + tau*b;		
+		y = x - x_prev;
+		error = y.norm2();
+		x_prev = x;
+		count += 1;
 	}
+	std::cout << count << std::endl;
 	return x;
 };
 
@@ -72,7 +79,6 @@ int main(){
 	//cout << v1.size;
 
 	matrix m(2, "first matrix");
-	m.print();
 	double** arr2d = new double*[2];
 	arr2d[0] = new double[2]{111, 112};
 	arr2d[1] = new double[2]{113, 114};
@@ -86,6 +92,22 @@ int main(){
 	cout << "testing operator +" << endl;
 	vector v5 = v1 + v3;
 	v5.print();
+
+	vector b(2);
+	double array[2] = {1, 1};
+    b.set_data(2, array);
+	b.print();
+        
+	matrix A(2, "matrix A");
+	double** array2d = new double*[2];
+    array2d[0] = new double[2]{3, 2};
+    array2d[1] = new double[2]{0, 4};
+    A.set_data(2, array2d);
+    A.print();
+	
+	vector res(2);
+	res = simple_iter(A, b, 0.0001);
+	res.print();
 
 	return 0;
 }
